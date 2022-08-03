@@ -81,7 +81,7 @@ router.post("/change_password", async (req, res) => {
     user.password = hash(new_password)
     user.save()
     res.json({
-        staus: true,
+        status: true,
         msg: "پسورد تغییر کرد",
         data: {}
     })
