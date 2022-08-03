@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
         if (err) {
             res.json({
                 status: false,
-                msg: "بارگزاری ناموفق بود",
+                msg: err,
                 data: {}
             })
             return
