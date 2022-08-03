@@ -57,7 +57,7 @@ router.post("/log_in", async (req, res) => {
     let token = jwt.sign({ name, lastName, code }, process.env.JWT)
     res.json({
         status: true,
-        msg: `${name} خوش آمدید`,
+        msg: name+" "+lastName,
         data: {
             token
         }
