@@ -45,7 +45,7 @@ router.post("/today", async (req, res) => {
         else {
             let not_send = await User.findOne({ id: down })
             all_sums.push({
-                user: not_send.identity,
+                user: not_send?.identity || null,
                 summery: null
             })
         }
@@ -169,7 +169,6 @@ router.post("/compare", async (req, res) => {
     })
 
 })
-
 
 
 router.post("/list", async (req, res) => {

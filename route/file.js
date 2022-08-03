@@ -21,6 +21,7 @@ router.post("/", (req, res) => {
                 msg: "بارگزاری ناموفق بود",
                 data: {}
             })
+            return
         }
 
         res.json({
