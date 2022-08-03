@@ -1,0 +1,69 @@
+//new summery
+----------------------------------------------
+url:
+/summery/new_summery
+
+POST
+
+input:
+
+token:user token
+summery:Array
+[
+
+{
+    code:"کد جریمه"
+    info:"توضیحات"
+    files:Array آرایه لینک فایل ها
+}
+
+]
+ خروجی مثل همیشه
+
+---------------------------------------------
+//upload files
+
+url:
+
+/upload
+
+POST
+
+input:
+base64:یادت باشه فرمت رو از اولش حذف نکنی
+output:
+ status: true,
+ msg: "فایل بارگزاری شد",
+data: {
+url: `http://localhost:5454/files/ued7f.png` این آدرسیه که فایل آپلود شده توش. میخوای سامری بفرسی باید فایلاتو تک تک با این ای پی آی آپلود کنی بعد آرایه فایلارو بفرسی
+مثلا سامری اینجور میشه:
+[
+
+    {
+    code:435,
+    info:تصادف در جاده اصلی آوج
+    files:[
+        "http://localhost:5454/files/ued7f.png"
+        "http://localhost:5454/files/asdx.mp4"
+        "http://localhost:5454/files/qqax.jpg"
+    ]
+},
+
+{
+    code:597,
+    info:چپ کردن ماشین سمند
+    files:[
+        "http://localhost:5454/files/u1d7f.png"
+        "http://localhost:5454/files/a4dx.mp4"
+        "http://localhost:5454/files/q6ax.jpg"
+    ]
+}
+
+
+]
+
+ یادت نره که من برای سامری یک آرایه قبول میکنم
+ و همه تخلفات رو یک جا ذخیره می کنم
+
+ سمت خودت تک تک تخلفاتو پوش کن به یک آرایه
+ آخر سر یه دکمه ثبت بزار که همرو بفرسی به من
