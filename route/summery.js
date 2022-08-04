@@ -40,12 +40,14 @@ router.post("/new_summery", async (req, res) => {
     date.setMilliseconds(0)
     let timestamp = date.getTime()
 
+    //disable check
+
     let is_exist = await Summery.findOne({ sender_code: code, date: timestamp })
     if (is_exist) {
         res.json({
             status: false,
             msg: "گزارش امروز شما قبلا ارسال شده",
-            data: false
+            data: {}
         })
         return
     }

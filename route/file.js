@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
         if (err) {
             res.json({
                 status: false,
-                msg: err,
+                msg: "بارگذاری ناموفق بود",
                 data: {}
             })
             return
@@ -35,11 +35,5 @@ router.post("/", (req, res) => {
     });
 
 })
-
-
-
-
-
-
 
 module.exports = router
