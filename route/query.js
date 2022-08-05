@@ -21,7 +21,7 @@ router.post("/today", async (req, res) => {
         return
     }
 
-    let s_user = await User.findOne({ code: user.code })
+    let s_user = await User.findOne({ id: user.code })
     const { send_from } = s_user
 
     let today = new Date
