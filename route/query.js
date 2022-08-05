@@ -32,25 +32,43 @@ router.post("/today", async (req, res) => {
     let timestamp = today.getTime()
 
 
-    let all_sums = []
+    let all_sums = {
+        self: [],
+        others: []
+    }
 
     let requests = send_from.map(async down => {
         let sum = await Summery.findOne({ sender_code: down, date: timestamp })
         if (sum) {
-            all_sums.push({
+            all_sums.others.push({
                 user: sum.sender,
                 summery: sum.encrypted_string
             })
         }
         else {
             let not_send = await User.findOne({ id: down })
-            all_sums.push({
+            all_sums.others.push({
                 user: not_send?.identity || null,
                 summery: null
             })
         }
         return
     })
+    let self = await Summery.findOne({ sender_code: s_user.id, date: timestamp })
+    if (self) {
+
+        all_sums.self.push({
+            user: self.sender,
+            summery: self.encrypted_string
+        })
+    }
+    else {
+        all_sums.self.push({
+            user: s_user,
+            summery: null
+        })
+
+    }
     await Promise.all(requests)
     res.json({
         status: true,
