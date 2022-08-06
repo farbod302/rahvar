@@ -9,7 +9,7 @@ const { jwt_verify } = require("../helper")
 
 router.post("/today", async (req, res) => {
 
-    const { token } = req.body
+    const { token ,time} = req.body
 
     let user = jwt_verify(token)
     if (!user) {
@@ -24,7 +24,7 @@ router.post("/today", async (req, res) => {
     let s_user = await User.findOne({ id: user.code })
     const { send_from } = s_user
 
-    let today = new Date
+    let today = new Date(time)
     today.setHours(0)
     today.setMinutes(0)
     today.setSeconds(0)
