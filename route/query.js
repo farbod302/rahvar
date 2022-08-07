@@ -41,14 +41,14 @@ router.post("/today", async (req, res) => {
         let sum = await Summery.findOne({ sender_code: down, date: timestamp })
         if (sum) {
             all_sums.others.push({
-                user: sum.sender,
-                summery: sum.encrypted_string
+                user: sum.sender.name + " " + sum.sender.lastName,
+                summery: sum.encrypted_string.summery
             })
         }
         else {
             let not_send = await User.findOne({ id: down })
             all_sums.others.push({
-                user: not_send?.identity || null,
+                user: not_send?.identity.name + " " + not_send?.identity.lastName || null,
                 summery: null
             })
         }
@@ -58,14 +58,17 @@ router.post("/today", async (req, res) => {
     if (self) {
 
         all_sums.self.push({
-            user: self.sender,
-            summery: self.encrypted_string
+            user: self.sender.name + " " + self.sender.lastName,
+            summery: self.encrypted_string.summery,
+            can_have_down:s_user.can_have_down
         })
     }
     else {
         all_sums.self.push({
-            user: s_user,
-            summery: null
+            user: s_user.identity.name + " " + s_user.identity.lastName,
+            summery: null,
+            can_have_down:s_user.can_have_down
+
         })
 
     }
