@@ -99,9 +99,8 @@ router.post("/specified", async (req, res) => {
         })
         return
     }
-
     let s_user = await User.findOne({ id: up_user.code })
-    if (!s_user.send_from.includes(code)) {
+    if (!s_user.send_from.includes(code) && code !== s_user.id) {
         res.json({
             status: false,
             msg: "این کاربر مادون شما نمی باشد",
@@ -114,7 +113,7 @@ router.post("/specified", async (req, res) => {
     res.json({
         status: true,
         msg: "",
-        data: summeryes
+        data: {summeryes}
     })
 
 })
