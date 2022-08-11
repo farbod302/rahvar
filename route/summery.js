@@ -94,13 +94,4 @@ router.post("/new_summery", async (req, res) => {
 
 })
 
-
-
-
-
-
-
-
-
-
 module.exports = router
