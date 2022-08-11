@@ -60,14 +60,14 @@ router.post("/today", async (req, res) => {
         all_sums.self.push({
             user: self.sender.name + " " + self.sender.lastName,
             summery: self.encrypted_string.summery,
-            can_have_down:s_user.can_have_down
+            can_have_down: s_user.can_have_down
         })
     }
     else {
         all_sums.self.push({
             user: s_user.identity.name + " " + s_user.identity.lastName,
             summery: null,
-            can_have_down:s_user.can_have_down
+            can_have_down: s_user.can_have_down
 
         })
 
@@ -219,6 +219,27 @@ router.post("/list", async (req, res) => {
 
 })
 
+
+
+router.post("/access",async (req, res) => {
+
+    const { token } = req.body
+    let user = jwt_verify(token)
+    if (!user) {
+        res.json({
+            status: false,
+            msg: "شناسه نامعتبر",
+            data: {}
+        })
+    }
+    let s_user = await User.findOne({ id: user.code })
+    res.json({
+        status: true,
+        msg: "",
+        data: {can_have_down:s_user.can_have_down}
+    })
+
+})
 
 
 module.exports = router
