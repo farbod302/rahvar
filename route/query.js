@@ -12,6 +12,9 @@ router.post("/today", async (req, res) => {
     const { token, time } = req.body
 
     let user = jwt_verify(token)
+    console.log({user,token})
+
+
     if (!user) {
         res.json({
             status: false,
