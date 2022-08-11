@@ -12,7 +12,7 @@ router.post("/today", async (req, res) => {
     const { token, time } = req.body
 
     let user = jwt_verify(token)
-    console.log({user,token})
+    console.log({ user, token })
 
 
     if (!user) {
@@ -110,11 +110,17 @@ router.post("/specified", async (req, res) => {
         return
     }
 
-    let summeryes = await Summery.find({ sender_code: code }, { encrypted_string: 1, date: 1, date_string: 1 })
+    let summeryes = await Summery.find({ sender_code: code }, { encrypted_string: 1, date: 1, _id: 0 })
+    summeryes = summeryes.map(e => {
+        return {
+            date:e.date,
+            encrypted_string:e.encrypted_string.summery
+        }
+    })
     res.json({
         status: true,
         msg: "",
-        data: {summeryes}
+        data: { summeryes }
     })
 
 })
@@ -224,7 +230,7 @@ router.post("/list", async (req, res) => {
 
 
 
-router.post("/access",async (req, res) => {
+router.post("/access", async (req, res) => {
 
     const { token } = req.body
     let user = jwt_verify(token)
@@ -239,7 +245,7 @@ router.post("/access",async (req, res) => {
     res.json({
         status: true,
         msg: "",
-        data: {can_have_down:s_user.can_have_down}
+        data: { can_have_down: s_user.can_have_down }
     })
 
 })
