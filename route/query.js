@@ -110,7 +110,7 @@ router.post("/specified", async (req, res) => {
     res.json({
         status: true,
         msg: "",
-        data: summeryes
+        data: {summeryes}
     })
 
 })
