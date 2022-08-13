@@ -38,3 +38,8 @@ app.use("/q", query)
 
 
 
+const sq = require("./route/sums")
+app.use("/sq", sq)
+
+
+
