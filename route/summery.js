@@ -11,7 +11,7 @@ const { uid } = require('uid')
 
 
 router.post("/new_summery", async (req, res) => {
-    const { token, summery } = req.body
+    const { token, summery, accident, stop } = req.body
     let user_id = jwt_verify(token)
     if (!user_id) {
         res.json({
@@ -70,7 +70,9 @@ router.post("/new_summery", async (req, res) => {
 
     let summery_for_encrypt = {
         count,
-        summery
+        summery,
+        accident: accident || 0,
+        stop: stop || { car: 0, motor: 0 }
     }
 
     let encrypted_string = encrypt(summery_for_encrypt)

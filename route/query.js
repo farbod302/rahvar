@@ -45,14 +45,18 @@ router.post("/today", async (req, res) => {
         if (sum) {
             all_sums.others.push({
                 user: sum.sender.name + " " + sum.sender.lastName,
-                summery: sum.encrypted_string.summery
+                summery: sum.encrypted_string.summery,
+                accident: sum.encrypted_string.accident || 0,
+                stop: sum.encrypted_string.stop || { car: 0, motor: 0 }
             })
         }
         else {
             let not_send = await User.findOne({ id: down })
             all_sums.others.push({
                 user: not_send?.identity.name + " " + not_send?.identity.lastName || null,
-                summery: null
+                summery: null,
+                accident: 0,
+                stop: { car: 0, motor: 0 }
             })
         }
         return
@@ -63,14 +67,18 @@ router.post("/today", async (req, res) => {
         all_sums.self.push({
             user: self.sender.name + " " + self.sender.lastName,
             summery: self.encrypted_string.summery,
-            can_have_down: s_user.can_have_down
+            can_have_down: s_user.can_have_down,
+            accident: self.encrypted_string.accident || 0,
+            stop: self.encrypted_string.stop || { car: 0, motor: 0 }
         })
     }
     else {
         all_sums.self.push({
             user: s_user.identity.name + " " + s_user.identity.lastName,
             summery: null,
-            can_have_down: s_user.can_have_down
+            can_have_down: s_user.can_have_down,
+            accident: 0,
+            stop: { car: 0, motor: 0 }
 
         })
 
@@ -113,8 +121,10 @@ router.post("/specified", async (req, res) => {
     let summeryes = await Summery.find({ sender_code: code }, { encrypted_string: 1, date: 1, _id: 0 })
     summeryes = summeryes.map(e => {
         return {
-            date:e.date,
-            encrypted_string:e.encrypted_string.summery
+            date: e.date,
+            encrypted_string: e.encrypted_string.summery,
+            accident: e.encrypted_string.accident || 0,
+            stop: e.encrypted_string.accident || { car: 0, motor: 0 }
         }
     })
     res.json({
