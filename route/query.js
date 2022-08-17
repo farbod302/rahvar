@@ -114,7 +114,6 @@ router.post("/specified", async (req, res) => {
             msg: "این کاربر مادون شما نمی باشد",
             data: {}
         })
-        //hi
         return
     }
 
@@ -124,7 +123,7 @@ router.post("/specified", async (req, res) => {
             date: e.date,
             encrypted_string: e.encrypted_string.summery,
             accident: e.encrypted_string.accident || 0,
-            stop: e.encrypted_string.accident || { car: 0, motor: 0 }
+            stop: e.encrypted_string.stop || { car: 0, motor: 0 }
         }
     })
     res.json({
