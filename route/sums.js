@@ -2,7 +2,9 @@ const express = require('express')
 const Summery = require('../db/summery')
 const router = express.Router()
 const JDate = require('jalali-date');
-const e = require('express');
+
+
+
 
 
 
@@ -47,10 +49,9 @@ router.post("/most", async (req, res) => {
 
 router.post("/year",async (req, res) => {
 
-    const { code } = req.body
+    const { code ,year} = req.body
 
-    const jdate = new JDate(1401, 1, 1);
-    console.log(jdate);
+    const jdate = new JDate(year, 1, 1);
     let new_date = new Date(jdate._d)
     let timestamp = new_date.getTime()
     let each_mount = 1000 * 1 * 60 * 60 * 24 * 30

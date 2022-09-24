@@ -3,8 +3,12 @@ const { jwt_verify, encrypt } = require('../helper')
 const router = express.Router()
 const User = require("../db/users")
 const Summery = require("../db/summery")
+const JDate = require('jalali-date');
+const Psum = require("../db/prv_sums")
 
 const { uid } = require('uid')
+const e = require('express')
+const socket_users = require('../socket_users')
 
 
 
@@ -21,7 +25,7 @@ router.post("/new_summery", async (req, res) => {
         })
         return
     }
-    const { code } = user_id
+    const { code, send_to } = user_id
     let user = await User.findOne({ id: code })
     if (user.active === false) {
         res.json({
@@ -93,6 +97,32 @@ router.post("/new_summery", async (req, res) => {
         data: {}
 
     })
+
+
+
+    const jdate = new JDate();
+    let mounth = jdate.date[1]
+    let year = jdate.date[0]
+
+    let befor_update = await Psum.findOne({ mounth: mounth, year: year })
+    if (!befor_update) return
+    let codes = befor_update.codes
+    count.forEach(p => {
+        let index = codes.findIndex(e => e.code === p.code)
+        if (index > -1) {
+            codes[index] -= p.count
+        }
+    })
+
+    await Psum.findOneAndUpdate({ mounth: mounth, year: year }, { $set: { codes: codes } })
+
+    if (!send_to || send_to === "") return
+    let socket_id = socket_users.find_user(send_to)
+    if (socket_id) {
+        let io = req.app.get("io")
+        io.to(socket_id).emit("notif", "notif")
+    }
+
 
 })
 

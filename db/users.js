@@ -6,8 +6,8 @@ const user = mongoose.Schema({
     id: String,
     identity: Object,
     send_to: {
-        type:String,
-        default:""
+        type: String,
+        default: ""
     },
     password: String,
     send_from: Array,
@@ -15,10 +15,11 @@ const user = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    can_have_down:{
-        type:Boolean,
-        default:false
-    }
+    can_have_down: {
+        type: Boolean,
+        default: false
+    },
+    down_acc: { type: Number, default: 0 }
 
 })
 
